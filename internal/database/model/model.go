@@ -32,11 +32,7 @@ const (
 	WireGuard   Protocol = "wireguard"
 	Hysteria    Protocol = "hysteria"
 	MTProto     Protocol = "mtproto"
-	// AmneziaWG2 is served as a standalone sidecar process, exactly like
-	// MTProto: Xray-core's wireguard proxy links wireguard-go, which cannot
-	// speak the AmneziaWG 2.0 obfuscated wire format (Jc/Jmin/Jmax, S1-S4,
-	// H1-H4, I1-I5). See internal/amneziawg for the sidecar manager.
-	AmneziaWG2 Protocol = "awg2"
+	AmneziaWG2  Protocol = "awg2"
 )
 
 // User represents a user account in the 3x-ui panel.
