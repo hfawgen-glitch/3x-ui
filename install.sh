@@ -25,6 +25,7 @@ else
     echo "Failed to check the system OS, please contact the author!" >&2
     exit 1
 fi
+echo "The release by neonixandrein"
 echo "The OS release is: $release"
 
 arch() {
