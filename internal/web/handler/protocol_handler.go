@@ -10,7 +10,7 @@ import (
 
 // ProtocolHandler handles protocol-related operations
 type ProtocolHandler struct {
-	memoryDB interface{} // Reference to in-memory database
+	memoryDB interface{}
 }
 
 // NewProtocolHandler creates a new protocol handler
@@ -33,19 +33,16 @@ func (h *ProtocolHandler) CreateInboundWithProtocol(w http.ResponseWriter, r *ht
 		return
 	}
 
-	// Validate protocol
 	if !entity.IsValidProtocol(config.Protocol) {
 		http.Error(w, "Invalid protocol", http.StatusBadRequest)
 		return
 	}
 
-	// Additional protocol-specific validation
 	if err := validateProtocolConfig(config); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	// Save to memory database
 	if err := h.saveInbound(config); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -55,53 +52,6 @@ func (h *ProtocolHandler) CreateInboundWithProtocol(w http.ResponseWriter, r *ht
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"success": true,
 		"message": "Inbound created successfully",
-		"data":    config,
-	})
-}
-
-// UpdateInboundWithProtocol updates an existing inbound with protocol configuration
-func (h *ProtocolHandler) UpdateInboundWithProtocol(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPut && r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-
-	id, err := strconv.Atoi(r.URL.Query().Get("id"))
-	if err != nil {
-		http.Error(w, "Invalid inbound ID", http.StatusBadRequest)
-		return
-	}
-
-	var config entity.InboundConfig
-	if err := json.NewDecoder(r.Body).Decode(&config); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
-		return
-	}
-
-	config.ID = id
-
-	// Validate protocol
-	if !entity.IsValidProtocol(config.Protocol) {
-		http.Error(w, "Invalid protocol", http.StatusBadRequest)
-		return
-	}
-
-	// Additional protocol-specific validation
-	if err := validateProtocolConfig(config); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	// Update in memory database
-	if err := h.saveInbound(config); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]interface{}{
-		"success": true,
-		"message": "Inbound updated successfully",
 		"data":    config,
 	})
 }
@@ -127,13 +77,11 @@ func (h *ProtocolHandler) AddClientToInbound(w http.ResponseWriter, r *http.Requ
 
 	client.InboundID = inboundID
 
-	// Validate client configuration
 	if client.Email == "" {
 		http.Error(w, "Email is required", http.StatusBadRequest)
 		return
 	}
 
-	// Save client
 	if err := h.saveClient(client); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -147,7 +95,7 @@ func (h *ProtocolHandler) AddClientToInbound(w http.ResponseWriter, r *http.Requ
 	})
 }
 
-// GetTraffic retrieves traffic statistics for inbounds or clients
+// GetTraffic retrieves traffic statistics
 func (h *ProtocolHandler) GetTraffic(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -160,7 +108,6 @@ func (h *ProtocolHandler) GetTraffic(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Get traffic data from memory
 	traffic := h.getTraffic(key)
 
 	w.Header().Set("Content-Type", "application/json")
@@ -206,22 +153,15 @@ func (h *ProtocolHandler) GetProtocolList(w http.ResponseWriter, r *http.Request
 }
 
 // Helper functions
-
 func (h *ProtocolHandler) saveInbound(config entity.InboundConfig) error {
-	// This would save to the in-memory database
-	// Implementation depends on database interface
 	return nil
 }
 
 func (h *ProtocolHandler) saveClient(client entity.ClientConfig) error {
-	// This would save to the in-memory database
-	// Implementation depends on database interface
 	return nil
 }
 
 func (h *ProtocolHandler) getTraffic(key string) map[string]interface{} {
-	// This would retrieve traffic from the in-memory database
-	// Implementation depends on database interface
 	return map[string]interface{}{
 		"upload":   0,
 		"download": 0,
@@ -229,10 +169,8 @@ func (h *ProtocolHandler) getTraffic(key string) map[string]interface{} {
 }
 
 func validateProtocolConfig(config entity.InboundConfig) error {
-	// Protocol-specific validation
 	switch config.Protocol {
 	case entity.ProtocolAWG2:
-		// AWG2-specific validation
 		if config.Port < 1 || config.Port > 65535 {
 			return ErrInvalidPort
 		}
@@ -248,9 +186,7 @@ func validateProtocolConfig(config entity.InboundConfig) error {
 	return nil
 }
 
-var (
-	ErrInvalidPort = &Error{"invalid port"}
-)
+var ErrInvalidPort = &Error{"invalid port"}
 
 type Error struct {
 	Message string

@@ -25,52 +25,52 @@ const (
 
 // ProtocolConfig represents the configuration for a specific protocol
 type ProtocolConfig struct {
-	Protocol   Protocol `json:"protocol"`
-	Port       int      `json:"port"`
+	Protocol   Protocol               `json:"protocol"`
+	Port       int                    `json:"port"`
 	Settings   map[string]interface{} `json:"settings"`
-	StreamSettings StreamSettings `json:"stream_settings,omitempty"`
+	StreamSettings StreamSettings     `json:"stream_settings,omitempty"`
 }
 
 // StreamSettings represents stream/transport settings
 type StreamSettings struct {
-	Network    string                 `json:"network"`
-	Security   string                 `json:"security"`
-	TLSSettings map[string]interface{} `json:"tls_settings,omitempty"`
-	WSSettings map[string]interface{} `json:"ws_settings,omitempty"`
+	Network      string                 `json:"network"`
+	Security     string                 `json:"security"`
+	TLSSettings  map[string]interface{} `json:"tls_settings,omitempty"`
+	WSSettings   map[string]interface{} `json:"ws_settings,omitempty"`
 	GRPCSettings map[string]interface{} `json:"grpc_settings,omitempty"`
 	HTTPSettings map[string]interface{} `json:"http_settings,omitempty"`
 }
 
 // InboundConfig represents an inbound configuration with protocol support
 type InboundConfig struct {
-	ID            int              `json:"id"`
-	Name          string           `json:"name"`
-	Protocol      Protocol         `json:"protocol"`
-	Port          int              `json:"port"`
-	Protocol_      ProtocolConfig   `json:"protocol_config"`
+	ID            int                    `json:"id"`
+	Name          string                 `json:"name"`
+	Protocol      Protocol               `json:"protocol"`
+	Port          int                    `json:"port"`
+	Protocol_     ProtocolConfig         `json:"protocol_config"`
 	Settings      map[string]interface{} `json:"settings"`
-	Clients       []ClientConfig   `json:"clients,omitempty"`
-	Traffic       TrafficData      `json:"traffic,omitempty"`
-	Remark        string           `json:"remark"`
-	Enable        bool             `json:"enable"`
-	CreatedAt     int64            `json:"created_at"`
-	UpdatedAt     int64            `json:"updated_at"`
+	Clients       []ClientConfig         `json:"clients,omitempty"`
+	Traffic       TrafficData            `json:"traffic,omitempty"`
+	Remark        string                 `json:"remark"`
+	Enable        bool                   `json:"enable"`
+	CreatedAt     int64                  `json:"created_at"`
+	UpdatedAt     int64                  `json:"updated_at"`
 }
 
 // ClientConfig represents a client connected to an inbound
 type ClientConfig struct {
-	ID           int               `json:"id"`
-	InboundID    int               `json:"inbound_id"`
-	Email        string            `json:"email"`
-	Protocol     Protocol          `json:"protocol"`
-	LimitIP      int               `json:"limit_ip"`
-	LimitSpeed   int               `json:"limit_speed"`
-	Traffic      TrafficData       `json:"traffic"`
-	ExpiryTime   int64             `json:"expiry_time"`
-	Enable       bool              `json:"enable"`
-	CreatedAt    int64             `json:"created_at"`
-	UpdatedAt    int64             `json:"updated_at"`
-	ProtocolData map[string]interface{} `json:"protocol_data"` // Protocol-specific configuration
+	ID           int                    `json:"id"`
+	InboundID    int                    `json:"inbound_id"`
+	Email        string                 `json:"email"`
+	Protocol     Protocol               `json:"protocol"`
+	LimitIP      int                    `json:"limit_ip"`
+	LimitSpeed   int                    `json:"limit_speed"`
+	Traffic      TrafficData            `json:"traffic"`
+	ExpiryTime   int64                  `json:"expiry_time"`
+	Enable       bool                   `json:"enable"`
+	CreatedAt    int64                  `json:"created_at"`
+	UpdatedAt    int64                  `json:"updated_at"`
+	ProtocolData map[string]interface{} `json:"protocol_data"`
 }
 
 // TrafficData represents traffic statistics
