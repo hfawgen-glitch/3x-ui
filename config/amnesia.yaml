@@ -1,0 +1,55 @@
+# Amnesia Mode Configuration
+# This configuration enables in-memory database mode where all data is reset on panel restart
+
+amnesia:
+  # Enable amnesia mode (in-memory database)
+  enabled: false
+  
+  # Auto-reset interval in seconds (0 = no auto-reset, only on panel restart)
+  auto_reset_interval: 0
+  
+  # Enable traffic monitoring in amnesia mode
+  enable_traffic: true
+  
+  # Enable automatic connection cleanup
+  auto_cleanup: true
+  
+  # Cleanup interval in seconds
+  cleanup_interval: 300
+  
+  # Maximum number of inbounds in memory
+  max_inbounds: 100
+  
+  # Maximum number of clients per inbound
+  max_clients_per_inbound: 1000
+  
+  # Enable persistent logging of amnesia mode operations
+  enable_logging: true
+  
+  # Log file path
+  log_file: "/var/log/x-ui/amnesia.log"
+  
+  # Protocols to support in amnesia mode
+  supported_protocols:
+    - vless
+    - vmess
+    - trojan
+    - shadowsocks
+    - wireguard
+    - awg2
+    - hysteria
+    - hysteria2
+    - tuic
+    - mixed
+  
+  # Default protocol when not specified
+  default_protocol: "vless"
+  
+  # Warning message to display in UI
+  warning_message: "Amnesia mode is active: All configurations will be lost on panel restart"
+  
+  # Enable backup to file before reset
+  enable_backup: true
+  
+  # Backup location
+  backup_path: "/tmp/x-ui-amnesia-backup"
